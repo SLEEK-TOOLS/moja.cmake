@@ -1,0 +1,2 @@
+# moja.cmake
+cmake modules 
