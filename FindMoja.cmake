@@ -28,18 +28,14 @@ if(CMAKE_SYSTEM MATCHES "Windows")
 			"C:/Development/moja.global/dist"
 			"C:/Development/moja.global/dist/lib/Debug"
 			"C:/Development/moja.global/dist/lib/Release"
-			"C:/Development/Software/moja"
-			"C:/moja"
-			"C:/Development/moja"
+            "C:/Development/Software/moja/moja_develop"
 		)
 		SET(MOJA_LIB_DIR_SEARCH
 			${MOJA_LIB_DIR_SEARCH}	
 			"C:/Development/moja.global/dist"			
 			"C:/Development/moja.global/dist/lib/Debug"
 			"C:/Development/moja.global/dist/lib/Release"
-			"C:/Development/Software/moja/"
-			"C:/moja/"
-			"C:/Development/moja/"
+            "C:/Development/Software/moja/moja_develop"
 		)
 	endif()
 endif()
