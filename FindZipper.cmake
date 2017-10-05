@@ -8,7 +8,6 @@ if(CMAKE_SYSTEM MATCHES "Windows")
 	if (EXISTS "C:/") 
 		SET(ZIPPER_DIR_SEARCH
 			${ZIPPER_DIR_SEARCH}
-			"C:/Development/zipper/"
 			"C:/Development/SLEEK-TOOLS/zipper/dist/"
 			"C:/Development/Software/zipper/"
 		)
@@ -16,28 +15,30 @@ if(CMAKE_SYSTEM MATCHES "Windows")
 	if (EXISTS "D:/") 
 		SET(ZIPPER_DIR_SEARCH
 			${ZIPPER_DIR_SEARCH}
-			"D:/Development/zipper/"
 			"D:/Development/SLEEK-TOOLS/zipper/dist/"
 			"D:/Development/Software/zipper/"
 		)
 	endif() 
 
 	find_path(Zipper_INCLUDE_PATH zipper/zipper.h
+		PATH_SUFFIXES 
+			include
 		PATHS
 			${ZIPPER_DIR_SEARCH}
-			${ZIPPER_DIR_SEARCH}/include
 	)
 
 	find_library(Zipper_LIB_DEBUG libZipper-staticd
+		PATH_SUFFIXES 
+			lib
 		PATHS
 			${ZIPPER_DIR_SEARCH}
-			${ZIPPER_DIR_SEARCH}/lib
 	)
 
 	find_library(Zipper_LIB_RELEASE libZipper-static
+		PATH_SUFFIXES 
+			lib 
 		PATHS
 			${ZIPPER_DIR_SEARCH}
-			${ZIPPER_DIR_SEARCH}/lib
 	)
 
 	set(Zipper_LIB
