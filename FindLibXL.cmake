@@ -24,7 +24,7 @@ if(CMAKE_SYSTEM MATCHES "Windows")
 			${LIBXL_DIR_SEARCH}
 	)
 
-	find_library(libXL_LIB zlib
+	find_library(libXL_LIB libxl
 		PATH_SUFFIXES lib64
 		PATHS
 			${LIBXL_DIR_SEARCH}
@@ -68,6 +68,6 @@ endif()
 # handle the QUIETLY and REQUIRED arguments and set ZLIB_FOUND to TRUE if
 # all listed variables are TRUE
 INCLUDE(FindPackageHandleStandardArgs)
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(Zlib DEFAULT_MSG libXL_INCLUDE_PATH)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(libXL DEFAULT_MSG libXL_INCLUDE_PATH)
 
 MARK_AS_ADVANCED(libXL_INCLUDE_PATH)
