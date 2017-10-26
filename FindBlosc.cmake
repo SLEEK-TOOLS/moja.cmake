@@ -19,14 +19,14 @@ if(CMAKE_SYSTEM MATCHES "Windows")
 		SET(BLOSC_DIR_SEARCH
 			${BLOSC_DIR_SEARCH}
 			"C:/Development/c-blosc-1.12.1/dist/"
-			"C:/Development/Software/blosc/"
+			"C:/Development/Software/c-blosc/"
 		)
 	endif() 
 	if (EXISTS "D:/") 
 		SET(BLOSC_DIR_SEARCH
 			${BLOSC_DIR_SEARCH}
 			"D:/Development/c-blosc-1.12.1/dist/"
-			"D:/Development/Software/blosc/"
+			"D:/Development/Software/c-blosc/"
 		)
 	endif() 
 
@@ -53,7 +53,7 @@ if (CMAKE_SYSTEM MATCHES "Linux" )
 	SET(BLOSC_LIB_SEARCH
 		${ADDITIONAL_LIB_DIRS}
 		${BLOSC_LIB_SEARCH}
-        /usr/local/blosc-master/
+        /usr/local/c-blosc-master/
         /usr/local/lib/
         /usr/lib/
 	)
@@ -65,7 +65,7 @@ if (CMAKE_SYSTEM MATCHES "Linux" )
 
 	SET(BLOSC_INCLUDE_SEARCH
 		${BLOSC_INCLUDE_SEARCH}
-        /usr/local/blosc-master/
+        /usr/local/c-blosc-master/
         /usr/local/
         /usr/
 	)
