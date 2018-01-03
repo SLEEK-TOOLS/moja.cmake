@@ -139,6 +139,7 @@ IF(EXISTS ${Poco_INCLUDE_DIR})
       ${Poco_INCLUDE_DIR}/Foundation/include
       ${Poco_INCLUDE_DIR}/Data/include
       ${Poco_INCLUDE_DIR}/Data/SQLite/include
+      ${Poco_INCLUDE_DIR}/Data/ODBC/include
       ${Poco_INCLUDE_DIR}/MongoDB/include
       ${Poco_INCLUDE_DIR}/Net/include
       ${Poco_INCLUDE_DIR}/Util/include
@@ -187,6 +188,24 @@ IF(EXISTS ${Poco_INCLUDE_DIR})
 	)
 
 	find_library(Poco_DATA_SQLITE_RELEASE NAMES PocoDataSQLite PocoDataSQLite_dll
+		PATH_SUFFIXES 
+			${SUFFIX_FOR_LIBRARY_PATH} 
+			release
+		PATHS # Look in other places.
+			${Poco_INCLUDE_DIR}
+			${POCO_DIR_SEARCH}
+	)
+
+	find_library(Poco_DATA_ODBC_DEBUG NAMES PocoDataODBCd PocoDataODBCd_dll
+		PATH_SUFFIXES 
+			${SUFFIX_FOR_LIBRARY_PATH} 
+			debug
+		PATHS # Look in other places.
+			${Poco_INCLUDE_DIR}
+			${POCO_DIR_SEARCH}
+	)
+
+	find_library(Poco_DATA_ODBC_RELEASE NAMES PocoDataODBC PocoDataODBC_dll
 		PATH_SUFFIXES 
 			${SUFFIX_FOR_LIBRARY_PATH} 
 			release
@@ -319,6 +338,14 @@ IF(EXISTS ${Poco_INCLUDE_DIR})
 	set( Poco_DATA_SQLITE debug     ${Poco_DATA_SQLITE_DEBUG}
 							optimized ${Poco_DATA_SQLITE_RELEASE} 
 							CACHE STRING "Poco SQLite link library text")
+
+	if(Poco_DATA_ODBC_DEBUG AND NOT Poco_DATA_ODBC_RELEASE)
+		set(Poco_DATA_ODBC_RELEASE ${Poco_DATA_ODBC_DEBUG})
+	endif(Poco_DATA_ODBC_DEBUG AND NOT Poco_DATA_ODBC_RELEASE)
+
+	set( Poco_DATA_ODBC debug     ${Poco_DATA_ODBC_DEBUG}
+							optimized ${Poco_DATA_ODBC_RELEASE} 
+							CACHE STRING "Poco ODBC link library text")
 
 	if(Poco_DATA_DEBUG AND NOT Poco_DATA_RELEASE)
 		set(Poco_DATA_RELEASE ${Poco_DATA_DEBUG})
