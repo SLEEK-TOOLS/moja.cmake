@@ -44,34 +44,15 @@ if(NETCDF_USE_DEFAULT_PATHS)
 endif()
 
 find_path (NETCDF_INCLUDE_DIR netcdf.h
-  PATHS 
-	"${NETCDF_DIR}/Debug/include"
-	"C:/Development/Software/NetCDF/Debug/include"
-)
-#set(NETCDF_INCLUDE_DIR ${NETCDF_INCLUDE_DIR_DEBUG})
+  PATHS "${NETCDF_DIR}/include")
 mark_as_advanced (NETCDF_INCLUDE_DIR)
 set (NETCDF_C_INCLUDE_DIRS ${NETCDF_INCLUDE_DIR})
 
-find_library (NETCDF_LIBRARY_DEBUG NAMES netcdf
-  PATHS 
-	"${NETCDF_DIR}/Debug/lib"
-	"C:/Development/Software/NetCDF/Debug/lib"
-  HINTS "${NETCDF_INCLUDE_DIR}/Debug/../lib")
-#mark_as_advanced (NETCDF_LIBRARY_DEBUG)
-#set (NETCDF_C_LIBRARIES ${NETCDF_LIBRARY_DEBUG})
+find_library (NETCDF_LIBRARY NAMES netcdf
+  PATHS "${NETCDF_DIR}/lib"
+  HINTS "${NETCDF_INCLUDE_DIR}/../lib")
+mark_as_advanced (NETCDF_LIBRARY)
 
-find_library (NETCDF_LIBRARY_RELEASE NAMES netcdf
-  PATHS 
-	"${NETCDF_DIR}/Release/lib"
-	"C:/Development/Software/NetCDF/Release/lib"
-  HINTS "${NETCDF_INCLUDE_DIR}/Release/../lib")
-#mark_as_advanced (NETCDF_LIBRARY_RELEASE)
-#set (NETCDF_C_LIBRARIES ${NETCDF_LIBRARY_RELEASE})
-
-set (NETCDF_LIBRARY	    debug		${NETCDF_LIBRARY_DEBUG}
-						optimized	${NETCDF_LIBRARY_RELEASE}
-	CACHE STRING "NETCDF_LIBRARY libraries")
-mark_as_advanced(NETCDF_LIBRARY)
 set (NETCDF_C_LIBRARIES ${NETCDF_LIBRARY})
 
 #start finding requested language components
@@ -110,54 +91,6 @@ macro (NetCDF_check_interface lang header libs)
   endif ()
 endmacro ()
 
-macro (NetCDF_check_interface_config lang config header libs)
-  if (NETCDF_${lang})
-    #search starting from user modifiable cache var
-    find_path (NETCDF_${lang}_INCLUDE_DIR_${config} NAMES ${header}
-	  PATHS 
-		"${NETCDF_CXX_DIR}/${Config}/include"
-		"C:/Development/Software/NCXX/${config}/include"
-      HINTS "${NETCDF_INCLUDE_DIR}/${config}"
-      HINTS "${NETCDF_${lang}_ROOT}/${config}/include"
-      #${USE_DEFAULT_PATHS}
-	  )
-
-    find_library (NETCDF_${lang}_LIBRARY_${config} NAMES ${libs}
-	  PATHS 
-		"${NETCDF_CXX_DIR}/${config}/lib"
-		"C:/Development/Software/NCXX/${config}/lib"
-      HINTS "${NetCDF_lib_dirs}/${config}"
-      HINTS "${NETCDF_${lang}_ROOT}/${config}/lib"
-      #${USE_DEFAULT_PATHS}
-	  )
-
-    mark_as_advanced (NETCDF_${lang}_INCLUDE_DIR_${config} NETCDF_${lang}_LIBRARY_${config})
-
-    if (NETCDF_${lang}_INCLUDE_DIR_${config} AND NETCDF_${lang}_LIBRARY_${config})
-	#
-    else ()
-      set (NETCDF_HAS_INTERFACES "NO")
-      message (STATUS "Failed to find NetCDF interface for ${lang}")
-    endif ()
-  endif ()
-endmacro ()
-
-macro (NetCDF_set_interface_config lang config_release config_debug)
-  if (NETCDF_${lang})
-
-    set (NETCDF_${lang}_LIBRARIES	    debug		${NETCDF_${lang}_LIBRARY_${config_debug}}
-										optimized	${NETCDF_${lang}_LIBRARY_${config_release}}
-										CACHE STRING "NETCDF_${lang}_LIBRARIES")
-
-    set (NETCDF_${lang}_INCLUDE_DIRS	${NETCDF_${lang}_INCLUDE_DIR_${config_debug}} 
-										CACHE STRING "NETCDF_${lang}_INCLUDE_DIRS")
-
-	list (APPEND NetCDF_libs ${NETCDF_${lang}_LIBRARIES})
-	list (APPEND NetCDF_includes ${NETCDF_${lang}_INCLUDE_DIRS})
-  endif ()
-endmacro ()
-
-
 list (FIND NetCDF_FIND_COMPONENTS "CXX" _nextcomp)
 if (_nextcomp GREATER -1)
   set (NETCDF_CXX 1)
@@ -170,12 +103,7 @@ list (FIND NetCDF_FIND_COMPONENTS "F90" _nextcomp)
 if (_nextcomp GREATER -1)
   set (NETCDF_F90 1)
 endif ()
-
-NetCDF_check_interface_config (CXX Debug ncVar.h netcdf-cxx4)
-NetCDF_check_interface_config (CXX Release ncVar.h netcdf-cxx4)
-NetCDF_set_interface_config (CXX Release Debug)
-
-#NetCDF_check_interface (CXX netcdfcpp.h netcdf_c++)
+NetCDF_check_interface (CXX netcdfcpp.h netcdf_c++)
 NetCDF_check_interface (F77 netcdf.inc  netcdff)
 NetCDF_check_interface (F90 netcdf.mod  netcdff)
 

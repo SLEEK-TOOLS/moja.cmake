@@ -42,6 +42,7 @@ if (CMAKE_SYSTEM MATCHES "Linux" )
 		${EIGEN_DIR_SEARCH}
 		/usr/local/include/eigen/
         /usr/include/eigen3/
+		/usr/local/include/eigen3/
 	)
 endif() 
 
