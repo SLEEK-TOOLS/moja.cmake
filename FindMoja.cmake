@@ -168,18 +168,6 @@ IF(NOT MOJA_LIBRARY_DIR)
 	)
 
 	find_library(
-		Moja_DATAREPOSITORY_CONFIGURATION_DEBUG NAMES 
-			moja.datarepository.configurationd 
-			moja.datarepository.configurationd_dll
-		PATH_SUFFIXES 
-			${SUFFIX_FOR_LIBRARY_PATH} 
-			debug
-		PATHS # Look in other places.
-			${MOJA_INCLUDE_DIR}
-			${MOJA_LIB_DIR_SEARCH}
-	)
-	
-	find_library(
 		Moja_DATAREPOSITORY_DEBUG NAMES 
 			moja.datarepositoryd 
 			moja.datarepositoryd_dll
@@ -229,18 +217,6 @@ IF(NOT MOJA_LIBRARY_DIR)
 	)
 
 	find_library(
-		Moja_DATAREPOSITORY_CONFIGURATION_RELEASE NAMES 
-			moja.datarepository.configuration 
-			moja.datarepository.configuration_dll
-		PATH_SUFFIXES 
-			${SUFFIX_FOR_LIBRARY_PATH} 
-			release
-		PATHS # Look in other places.
-			${MOJA_INCLUDE_DIR}
-			${MOJA_LIB_DIR_SEARCH}
-	)
-	
-	find_library(
 		Moja_DATAREPOSITORY_RELEASE NAMES 
 			moja.datarepository 
 			moja.datarepository_dll
@@ -288,18 +264,6 @@ IF(NOT MOJA_LIBRARY_DIR)
 			CACHE STRING "Moja core link library text")
 	endif()
 
-	if(Moja_DATAREPOSITORY_CONFIGURATION_DEBUG AND NOT Moja_DATAREPOSITORY_CONFIGURATION_RELEASE)
-		set(Moja_DATAREPOSITORY_CONFIGURATION ${Moja_DATAREPOSITORY_CONFIGURATION_DEBUG} CACHE STRING "Moja datarepository configuration link library text")
-	endif()
-	if(Moja_DATAREPOSITORY_CONFIGURATION_RELEASE AND NOT Moja_DATAREPOSITORY_CONFIGURATION_DEBUG)
-		set(Moja_DATAREPOSITORY_CONFIGURATION ${Moja_DATAREPOSITORY_CONFIGURATION_RELEASE} CACHE STRING "Moja datarepository configuration link library text")
-	endif()
-	if(Moja_DATAREPOSITORY_CONFIGURATION_RELEASE AND Moja_DATAREPOSITORY_CONFIGURATION_DEBUG)
-		set(Moja_DATAREPOSITORY_CONFIGURATION 	debug     ${Moja_DATAREPOSITORY_CONFIGURATION_DEBUG}
-						optimized ${Moja_DATAREPOSITORY_CONFIGURATION_RELEASE}
-			CACHE STRING "Moja datarepository configuration link library text")
-	endif()
-	
 	if(Moja_DATAREPOSITORY_DEBUG AND NOT Moja_DATAREPOSITORY_RELEASE)
 		set(Moja_DATAREPOSITORY ${Moja_DATAREPOSITORY_DEBUG} CACHE STRING "Moja datarepository link library text")
 	endif()
