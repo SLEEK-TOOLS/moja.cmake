@@ -9,6 +9,7 @@ if(CMAKE_SYSTEM MATCHES "Windows")
 	if (EXISTS "C:/") 
 		SET(TURTLE_DIR_SEARCH
 			${TURTLE_DIR_SEARCH}
+			"C:/Development/turtle/include/"
 			"C:/Development/turtle-1.3.0/include/"
 			"C:/Development/turtle-1.2.9/include/"
 			"C:/Development/turtle-1.2.8/include/"
@@ -21,6 +22,7 @@ if(CMAKE_SYSTEM MATCHES "Windows")
 	if (EXISTS "D:/") 
 		SET(TURTLE_DIR_SEARCH
 			${TURTLE_DIR_SEARCH}
+			"D:/Development/turtle/include/"
 			"D:/Development/turtle-1.3.0/include/"
 			"D:/Development/turtle-1.2.9/include/"
 			"D:/Development/turtle-1.2.8/include/"

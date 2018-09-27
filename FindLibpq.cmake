@@ -17,6 +17,7 @@ if(CMAKE_SYSTEM MATCHES "Windows")
         if (EXISTS "C:/")
                 SET(LIBPQ_DIR_SEARCH
                         ${LIBPQ_DIR_SEARCH}
+						"C:/Program Files/PostgreSQL/10/include"
                         "C:/Program Files/PostgreSQL/9.6/include"
                         "C:/Development/PG9.5/include"
                         "C:/Program Files/PostgreSQL/9.5/include"
@@ -24,6 +25,7 @@ if(CMAKE_SYSTEM MATCHES "Windows")
                 )
                 SET(LIBPQ_LIB_DIR_SEARCH
                         ${LIBPQ_LIB_DIR_SEARCH}
+						"C:/Program Files/PostgreSQL/10/lib"
                         "C:/Program Files/PostgreSQL/9.6/lib"
                         "C:/Development/PG9.5/lib"
                         "C:/Program Files/PostgreSQL/9.5/lib"
@@ -34,12 +36,14 @@ if(CMAKE_SYSTEM MATCHES "Windows")
                 SET(LIBPQ_DIR_SEARCH
                         ${LIBPQ_DIR_SEARCH}
                         D:/Development
+						"D:/Program Files/PostgreSQL/10/include"
                         "D:/Program Files/PostgreSQL/9.6/include"
                         "D:/Program Files/PostgreSQL/9.5/include"
                         "D:/Program Files/PostgreSQL/9.4/include"
                 )
                 SET(LIBPQ_LIB_DIR_SEARCH
                         ${LIBPQ_LIB_DIR_SEARCH}
+						"D:/Program Files/PostgreSQL/10/lib"
                         "D:/Program Files/PostgreSQL/9.6/lib"
                         "D:/Program Files/PostgreSQL/9.5/lib"
                         "D:/Program Files/PostgreSQL/9.4/lib"
