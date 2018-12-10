@@ -89,6 +89,7 @@ ENDIF()
 
 # Add in some path suffixes. These will have to be updated whenever a new Poco version comes out.
 SET(SUFFIX_FOR_INCLUDE_PATH
+	poco-1.9.0-all
 	poco-1.8.1-all
 	poco-1.7.9-all
 	poco-1.7.8p3-all
