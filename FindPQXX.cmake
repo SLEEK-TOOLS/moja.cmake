@@ -1,54 +1,80 @@
 # Find PostGreSQL C++ library and header file
 # Sets
-#   PQXX_FOUND                 to 0 or 1 depending on result
-#   PQXX_INCLUDE_DIRECTORIES  to the directory containing mysql.h
-#   PQXX_LIBRARIES            to the MySQL client library (and any dependents required)
+#   PQXX_FOUND                to 0 or 1 depending on result
+#   PQXX_INCLUDE_DIRECTORIES  to the directory containing pqxx/pqxx
+#   PQXX_LIBRARIES            to the PQXX library (and any dependents required)
 # If PQXX_REQUIRED is defined, then a fatal error message will be generated if libpqxx is not found
-if ( NOT PQXX_INCLUDE_DIRECTORIES OR NOT PQXX_LIBRARIES )
 
-  FIND_PACKAGE( PostgreSQL REQUIRED )
-  if ( PostgreSQL_FOUND )
-    file( TO_CMAKE_PATH "$ENV{PQXX_DIR}" _PQXX_DIR )
+SET(SEARCH_PATH_PQXX "" CACHE PATH "Additional PQXX search path")
+SET(PQXX_DIR_SEARCH
+	$ENV{PQXX_ROOT}
+    ${SEARCH_PATH_PQXX}
+	${PQXX_DIR_SEARCH}
+)
 
-    find_library( PQXX_LIBRARY
-      NAMES libpqxx pqxx
-      PATHS
-        ${_PQXX_DIR}/lib
-        ${_PQXX_DIR}
-        ${CMAKE_INSTALL_PREFIX}/lib
-          ${CMAKE_INSTALL_PREFIX}/bin
-        /usr/local/pgsql/lib
-        /usr/local/lib
-        /usr/lib
-      DOC "Location of libpqxx library"
-      NO_DEFAULT_PATH
-    )
+if(CMAKE_SYSTEM MATCHES "Windows")
+	if (EXISTS "C:/") 
+		SET(PQXX_DIR_SEARCH
+			${PQXX_DIR_SEARCH}
+			"C:/Development/SLEEK-TOOLS/libpqxx/dist/"
+			"C:/Development/Software/libpqxx/"
+		)
+	endif() 
+	if (EXISTS "D:/") 
+		SET(PQXX_DIR_SEARCH
+			${PQXX_DIR_SEARCH}
+			"D:/Development/SLEEK-TOOLS/libpqxx/dist/"
+			"D:/Development/Software/libpqxx/"
+		)
+	endif() 
 
-    find_path( PQXX_HEADER_PATH
-      NAMES pqxx/pqxx
-      PATHS
-        ${_PQXX_DIR}/include
-        ${_PQXX_DIR}
-        ${CMAKE_INSTALL_PREFIX}/include
-        /usr/local/pgsql/include
-        /usr/local/include
-        /usr/include
-      DOC "Path to pqxx/pqxx header file. Do not include the 'pqxx' directory in this value."
-      NO_DEFAULT_PATH
-    )
-  endif ( PostgreSQL_FOUND )
+	find_path(PQXX_INCLUDE_DIRECTORIES pqxx/pqxx
+		PATH_SUFFIXES 
+			include
+		PATHS
+			${PQXX_DIR_SEARCH}
+	)
 
-  if ( PQXX_HEADER_PATH AND PQXX_LIBRARY )
+	find_library(PQXX_LIBRARIES pqxx
+		PATH_SUFFIXES 
+			lib
+		PATHS
+			${PQXX_DIR_SEARCH}
+	)
 
-    set( PQXX_FOUND 1 CACHE INTERNAL "PQXX found" FORCE )
-    set( PQXX_INCLUDE_DIRECTORIES "${PQXX_HEADER_PATH};${PostgreSQL_INCLUDE_DIRS}" CACHE STRING "Include directories for PostGreSQL C++ library"  FORCE )
-    set( PQXX_LIBRARIES "${PQXX_LIBRARY};${PostgreSQL_LIBRARIES}" CACHE STRING "Link libraries for PostGreSQL C++ interface" FORCE )
+	set(LibPqxx_LIB
+		debug ${LibPqxx_LIB_DEBUG}
+		optimized ${LibPqxx_LIB_RELEASE}
+		CACHE STRING "PQXX library")
 
-    mark_as_advanced( FORCE PQXX_INCLUDE_DIRECTORIES )
-    mark_as_advanced( FORCE PQXX_LIBRARIES )
+endif()
 
-  else ( PQXX_HEADER_PATH AND PQXX_LIBRARY )
-    message( "PQXX NOT FOUND" )
-  endif ( PQXX_HEADER_PATH AND PQXX_LIBRARY )
+if (CMAKE_SYSTEM MATCHES "Linux")
+	SET(PQXX_DIR_SEARCH
+		${PQXX_DIR_SEARCH}
+        /usr/local/
+        /usr/
+	)
 
-endif ( NOT PQXX_INCLUDE_DIRECTORIES OR NOT PQXX_LIBRARIES )
+	find_path(PQXX_INCLUDE_DIRECTORIES pqxx/pqxx
+		PATH_SUFFIXES 
+			include 
+		PATHS
+			${PQXX_DIR_SEARCH}
+	)
+
+	find_library(PQXX_LIBRARIES pqxx
+		PATH_SUFFIXES 
+			lib 
+		PATHS
+			${PQXX_DIR_SEARCH}
+	)
+
+endif(CMAKE_SYSTEM MATCHES "Linux")
+
+# handle the QUIETLY and REQUIRED arguments and set PQXX_FOUND to TRUE if
+# all listed variables are TRUE
+INCLUDE(FindPackageHandleStandardArgs)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(PQXX DEFAULT_MSG PQXX_INCLUDE_DIRECTORIES)
+
+MARK_AS_ADVANCED(PQXX_INCLUDE_DIRECTORIES)
