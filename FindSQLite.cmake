@@ -8,6 +8,7 @@ if(CMAKE_SYSTEM MATCHES "Windows")
 	if (EXISTS "C:/") 
 		SET(SQLITE_DIR_SEARCH
 			${SQLITE_DIR_SEARCH}
+            "C:/Development/sqlite-amalgamation-3260000/"
             "C:/Development/sqlite-amalgamation-3210000/"
             "C:/Development/sqlite-amalgamation-3200100/"
 			"C:/Development/sqlite-amalgamation-3200000/"
@@ -17,6 +18,7 @@ if(CMAKE_SYSTEM MATCHES "Windows")
 	if (EXISTS "D:/") 
 		SET(SQLITE_DIR_SEARCH
 			${SQLITE_DIR_SEARCH}
+			"D:/Development/sqlite-amalgamation-3260000/"
 			"D:/Development/sqlite-amalgamation-3210000/"
 			"D:/Development/sqlite-amalgamation-3200100/"
 			"D:/Development/sqlite-amalgamation-3200000/"
@@ -28,6 +30,7 @@ endif()
 if (CMAKE_SYSTEM MATCHES "Linux" )
 	SET(SQLITE_DIR_SEARCH
 		${SQLITE_DIR_SEARCH}
+        /usr/local/sqlite-autoconf-3260000/ 
         /usr/local/sqlite-autoconf-3210000/ 
         /usr/local/sqlite-autoconf-3200100/ 
         /usr/local/sqlite-autoconf-3200000/ 
